@@ -18,6 +18,16 @@ jobs:
         uses: ./.cloudbees/actions/test
         with:
           input1: ${{ startsWith(fromJSON(steps.genjson.outputs.json)['key'], 'prefix') }}
+      - id: genjson2
+        name: Generate fake input data 2
+        uses: docker://alpine:3.22
+        run: |
+          echo '{"key": 3}' > $CLOUDBEES_OUTPUTS/json
+      - id: run_action2
+        name: Run action 2
+        uses: ./.cloudbees/actions/test
+        with:
+          input1: ${{ startsWith(fromJSON(steps.genjson.outputs.json)['key'], 'prefix') }}
 
   test-action-output-mapping-error-handling:
     steps:
