@@ -6,14 +6,6 @@ on:
   workflow_dispatch:
 
 jobs:
-  test_simple_error:
-    steps:
-      - id: simple_error
-        name: Generate fake input data
-        uses: docker://alpine:3.22
-        run: |
-          echo "${{inputs.error}}"
-       
   test-action-input-mapping-error-handling:
     steps:
       - id: genjson
@@ -38,7 +30,6 @@ jobs:
           input1: ${{ startsWith(fromJSON(steps.genjson.outputs.json)['key'], 'prefix') }}
 
   test-action-output-mapping-error-handling:
-    needs: test-action-input-mapping-error-handling
     steps:
       - id: run
         name: Run action
@@ -54,7 +45,6 @@ jobs:
           ACTIONOUT: ${{ steps.run.outputs.output1 }}
 
   test-action-nested-error-handling-no-id:
-    needs: test-action-output-mapping-error-handling
     steps:
       - id: genjson
         name: Generate fake input data
@@ -67,7 +57,6 @@ jobs:
           input1: ${{ startsWith(fromJSON(steps.genjson.outputs.json)['key'], 'prefix') }}
 
   test-action-nested-error-handling-with-id:
-    needs: test-action-nested-error-handling-no-id
     steps:
       - id: genjson
         name: Generate fake input data
