@@ -13,7 +13,8 @@ jobs:
         uses: docker://alpine:3.22
         run: |
           echo '{"key": 3}' > $CLOUDBEES_OUTPUTS/json
-      - name: Run action
+      - id: run_action
+        name: Run action
         uses: ./.cloudbees/actions/test
         with:
           input1: ${{ startsWith(fromJSON(steps.genjson.outputs.json)['key'], 'prefix') }}
