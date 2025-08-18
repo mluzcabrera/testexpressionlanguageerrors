@@ -22,7 +22,7 @@ jobs:
         name: Generate fake input data 2
         uses: docker://alpine:3.22
         run: |
-          echo '{"key": 3}' > $CLOUDBEES_OUTPUTS/json
+          echo 'hello' 
       - id: run_action2
         name: Run action 2
         uses: ./.cloudbees/actions/test
